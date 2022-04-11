@@ -55,7 +55,7 @@ const PostDetail = ({ post }) => {
     }
   };
 
-
+  
   
   return (
 
