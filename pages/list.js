@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import Table from '../components/Table'
 import { getUserContent } from '../services'
+import { getSession } from 'next-auth/react'
 
 
 
@@ -26,7 +27,8 @@ const list = ({data, session}) => {
 export default list
 
 export async function getServerSideProps(context) {
-    const email = context.query.email
+    const session = await getSession(context)
+    const email = session.user.email
     const posts = (await getUserContent(email)) || []
 
     return {

@@ -22,6 +22,7 @@ export const CreateNextUserByEmail = gql`
   }
 `;
 
+
 export default NextAuth({
     // pages: {
     //   signIn: "/signin",
@@ -65,27 +66,12 @@ export default NextAuth({
         },
       }),
     ],
-  //   callbacks: {
-  //   jwt: async (token, user) => {
-  //     if (user) {
-  //       token.id = user.id;
-  //       token.username = user.username;
-  //     }
 
-  //     return token;
-  //   },
-  //   session: async (session, token) => {
-  //     const nextSession = {
-  //       ...session,
-  //       id: token.id,
-  //       username: token.username,
-  //     };
-
-  //     console.log(session)
-
-  //     return nextSession;
-  //   },
-  // },
+    events: {
+      signIn: ({user}) => {
+        console.log(user.username)  
+      }
+    },
     secret: process.env.JWT_SECRET,
 
   });

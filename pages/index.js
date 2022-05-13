@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import { useSession } from 'next-auth/react';
-import { useEffect } from 'react'
 import Link from 'next/link';
 import Button from '@mui/material/Button';
 
@@ -13,9 +12,12 @@ export default function Home({ posts }) {
   const loading = status === "loading";
   if (loading) return null;
 
-  const persistUserData = () => {
+  if (status === "authenticated") {
+    if (sessionStorage.getItem("session")) {
+      sessionStorage.removeItem("session")
+    }
     sessionStorage.setItem('session', JSON.stringify(session.user.email))
-  }
+  };
   
   return (
     <div className="container mx-auto px-15 mb-8">
@@ -26,7 +28,8 @@ export default function Home({ posts }) {
       </Head>
       {session ? 
       (
-        <Button variant="contained" onClick={persistUserData}> 
+        <div>
+        <Button variant="contained" > 
           <Link href={{
               pathname: "list",
               query: {
@@ -39,6 +42,8 @@ export default function Home({ posts }) {
             </span>
           </Link>   
         </Button>
+        <p>{sessionStorage.getItem('session')}</p>
+        </div>
       ) : 
       (<h1>Please log in</h1>)}
     </div>
