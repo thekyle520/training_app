@@ -1,4 +1,4 @@
-import { request, gql } from 'graphql-request';
+import { request, gql } from 'graphql-request'; 
 
 const graphqlAPI = process.env.NEXT_PUBLIC_GRAPHCMS_ENDPOINT;
 
@@ -41,3 +41,61 @@ export const getPosts = async () => {
   
     return result.post;
   };
+
+  export const getUserContent = async (email) => {
+    const query = gql`
+    query GetUserContent($email: String!) {
+      nextUsers(where: {email: $email}, stage: DRAFT) {
+        posts {
+          id
+          clause
+          slug
+          section
+          title
+        }
+        completed {
+          slug
+        }
+      }
+    }`
+      
+      const result = await request(graphqlAPI, query, { email });
+  
+    return result
+  }
+
+  export const getCompleteData = async (email) => {
+    const query = gql`
+    query GetCompleteData($email: String!) {
+      nextUsers(where: {email: $email}) {
+        completed {
+          slug
+        }
+      }
+    }`
+      
+    const result = await request(graphqlAPI, query, { email });
+  
+    return result
+  }
+
+  export const updateUserCompletion = async (email, slug) => {
+    const query = gql`
+    mutation UpdatePostCompletion ($email: String!, $slug: String!) {
+      updateNextUser(
+        where: {email: $email}
+        data: {completed: {connect: {where: {slug: $slug}}}}
+      ) {
+        id
+        completed {
+          slug
+        }
+      }
+    }`
+      
+      const result = await request(graphqlAPI, query, { email, slug });
+  
+    return result
+  }
+
+  

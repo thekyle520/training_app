@@ -1,50 +1,47 @@
 import React from 'react';
-import { useRouter } from 'next/router';
+import { useSession } from "next-auth/react"
 
-
-import { PostDetail, Loader } from '../../components';
+import { PostDetail, PostDetailBar, Loader } from '../../components';
 import { getPosts, getPostDetails } from '../../services';
 
 const PostDetails = ({ post }) => {
-  const router = useRouter();
+
+  const { data: session, status } = useSession();
+  const loading = status === "loading";
+  if (loading) return null;
+
+  
 
 
-  if (router.isFallback) {
-    return <Loader />;
-  }
+  // // if (router.isFallback) {
+  // //   return <Loader />;
+  // // }
 
+  
   
   return (
     <>
       <div className="container mx-auto px-10 mb-8">
-        
-            <PostDetail post={post} />
-          
-      </div>
-      {/* <div className="container mx-auto px-10 mb-8">
-        <div className="grid grid-cols-1 lg:grid-cols-8 gap-12">
-          <div className="col-span-1 lg:col-span-12">
-            <PostDetail post={post} />
-          </div>
+          <PostDetailBar post={post}/>
+        <div>
+          <PostDetail post={post} />
         </div>
-      </div> */}
+      </div>
+      
     </>
   );
 };
+
 export default PostDetails;
 
-// Fetch data at build time
-export async function getStaticProps({ params }) {
-  const data = await getPostDetails(params.slug);
+export async function getStaticProps(context) {
   return {
     props: {
-      post: data,
+      post: await getPostDetails(context.params.slug)
     },
   };
 }
 
-// Specify dynamic routes to pre-render pages based on data.
-// The HTML is generated at build time and will be reused on each request.
 export async function getStaticPaths() {
   const posts = await getPosts();
   return {

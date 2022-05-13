@@ -5,8 +5,6 @@ import ReactMarkdown from 'react-markdown'
 
 
 const PostDetail = ({ post }) => {
-
-
   
   const getContentFragment = (index, text, obj, type) => {
     let modifiedText = text;
