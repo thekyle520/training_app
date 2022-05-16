@@ -5,9 +5,16 @@ import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import Link from 'next/link';
 import { useSession } from "next-auth/react"
-
-
+import Alert from '@mui/material/Alert';
+import Collapse from '@mui/material/Collapse';
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
 import {updateUserCompletion} from '../services';
+
+
+
+
+
 
 
 const PostDetailBar = ({post}) => {
@@ -20,6 +27,7 @@ const PostDetailBar = ({post}) => {
   const [slugs, setSlugs] = useState("")
   const [nextTraining, setNextTraining] = useState("")
   const [prevTraining, setPrevTraining] = useState("")
+  const [open, setOpen] = useState(false); 
 
   //Init
   useEffect(() => {
@@ -52,23 +60,37 @@ const PostDetailBar = ({post}) => {
       }
   }
 
-  // const verfifyComplete = async() => {
-  //   const data = await getUserContent(session.user.email)
-  //   const verifyData =  data.nextUsers[0].completed.map((item, i) => item.slug)
-  //   setComplete(verifyData)
-  // }
-
   const handleCompleteMutation = async () => {
     await updateUserCompletion(session.user.email, post.slug);
     let data = JSON.parse(sessionStorage.getItem('posts'))
     data.completed.push({slug: post.slug})
     sessionStorage.setItem('posts', JSON.stringify(data))
+    setOpen(true)
   }
 
   
   
   return (
     <div>
+        <Collapse in={open}>
+        <Alert
+          action={
+            <IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+              onClick={() => {
+                setOpen(false);
+              }}
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          }
+          sx={{ mb: 2 }}
+        >
+          {`Congrats! ${post.title} is complete.` }
+        </Alert>
+      </Collapse>
           <div className='flex flex-row rounded-lg bg-white	border-2 border-solid border-slate-200 h-12'>
             <div className='flex-1 justify-self-center self-center'>
               {complete.includes(post.slug) ? 

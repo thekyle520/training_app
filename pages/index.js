@@ -3,9 +3,6 @@ import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import Button from '@mui/material/Button';
 
-
-
-
 export default function Home({ posts }) {
 
   const { data: session, status } = useSession();
@@ -17,8 +14,9 @@ export default function Home({ posts }) {
       sessionStorage.removeItem("session")
     }
     sessionStorage.setItem('session', JSON.stringify(session.user.email))
-  };
   
+  };
+
   return (
     <div className="container mx-auto px-15 mb-8">
       <Head>
@@ -30,19 +28,12 @@ export default function Home({ posts }) {
       (
         <div>
         <Button variant="contained" > 
-          <Link href={{
-              pathname: "list",
-              query: {
-                  email: session.user.email
-              }
-            }}
-            as={`list`}>
+          <Link href='/list'>
             <span className='cursor-pointer text-white'>
                 Head to Training
             </span>
           </Link>   
         </Button>
-        <p>{sessionStorage.getItem('session')}</p>
         </div>
       ) : 
       (<h1>Please log in</h1>)}
@@ -52,6 +43,7 @@ export default function Home({ posts }) {
 
   )
 }
+
 
 
 

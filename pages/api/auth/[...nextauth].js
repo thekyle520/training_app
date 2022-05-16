@@ -24,10 +24,10 @@ export const CreateNextUserByEmail = gql`
 
 
 export default NextAuth({
-    // pages: {
-    //   signIn: "/signin",
-    //   signOut: "/",
-    // },
+    pages: {
+      signIn: "/signin",
+      error: "/signin"
+    },
     providers: [
       CredentialsProvider({
         name: "Email & Password",
@@ -55,7 +55,7 @@ export default NextAuth({
           const isValid = await verifyPassword(password, user.password);
         
           if (!isValid) {
-            throw new Error("Wrong credentials. Try again.");
+            throw new Error("Wrong credentials! Please try again.");
           }
         
           return {
@@ -66,12 +66,6 @@ export default NextAuth({
         },
       }),
     ],
-
-    events: {
-      signIn: ({user}) => {
-        console.log(user.username)  
-      }
-    },
     secret: process.env.JWT_SECRET,
 
   });
