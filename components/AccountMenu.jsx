@@ -10,7 +10,17 @@ import Tooltip from '@mui/material/Tooltip';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { signOut } from "next-auth/react";
+import Link from 'next/link'
 
+const ProfileLink = React.forwardRef(({ onClick, href }, ref) => {
+  return (
+    <a href={href} onClick={onClick} ref={ref}>
+      <MenuItem>
+        <Avatar /> Profile
+      </MenuItem>
+    </a>
+  )
+})
 
 export default function AccountMenu() {
  
@@ -83,16 +93,11 @@ export default function AccountMenu() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem>
-          <Avatar /> Profile
-        </MenuItem>
+        <Link href='/profile' passHref>
+          <ProfileLink />
+        </Link>
+        
         <Divider />
-        <MenuItem>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          Settings
-        </MenuItem>
         <MenuItem>
             <button onClick={() =>
                 signOut({

@@ -1,22 +1,26 @@
-import React, { useEffect } from 'react'
-import Table from '../components/Table'
-import { getUserContent } from '../services'
+import React from 'react'
 import { getSession } from 'next-auth/react'
+import { getUserContent } from '../services'
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import { Box } from '@mui/system';
 import { styled } from '@mui/material/styles';
 
 
-const list = ({data, session}) => {
-    const posts = (data[0].nextUsers[0].posts)
-    const complete = (data[0].nextUsers[0].completed.map((item, i) => item.slug))
+
+
+const Profile = ({data}) => {
+
+    const posts = data[0].nextUsers[0].posts
+    const complete = data[0].nextUsers[0].completed
     const progress = complete.length/posts.length * 100
-    
-    useEffect(() => {
-        sessionStorage.setItem('posts', JSON.stringify(data[0].nextUsers[0]));
-        console.log(session)
-    }, [])
-     
+    if (progress === 100) {
+        let status = true
+    } else {
+        let status = false
+    }
+
+
+
     const BorderLinearProgress = styled(LinearProgress)
     (({theme}) => ({
     height: 10,
@@ -33,31 +37,34 @@ const list = ({data, session}) => {
     
 
    
-    return ( 
-    <div className="container mx-auto px-15 mb-8">
-         <div className='flex flex-col rounded-md bg-white my-2'>
-                <div className='flex justify-center items-center rounded-lg py-2'>
-                    <h1 className='px-4'>{`${progress}%`}</h1>
+
+  return (
+    <div className="container mx-auto px-10 mb-8">
+         <div className='flex flex-col rounded-lg bg-white	border-2 border-solid border-slate-200 '>
+                <div className='flex justify-center items-center rounded-lg border-2 border-solid border-gray-400 m-5'>
+                    <h1 className='p-4'>{`${progress}%`}</h1>
                     <Box sx={{ width: '80%' }}>
                         <BorderLinearProgress variant="determinate" value={progress} />
                     </Box>
                 </div>
         </div>
-        <Table posts={posts} complete={complete}/>
     </div>
+
+   
+
   )
 }
 
-export default list
+export default Profile
 
 export async function getServerSideProps(context) {
     const session = await getSession(context)
     const email = session.user.email
-    const posts = (await getUserContent(email)) || []
+    const data = (await getUserContent(email)) || []
 
     return {
         props: { 
-           data: [posts]
+           data: [data]
         }
     }
 }
