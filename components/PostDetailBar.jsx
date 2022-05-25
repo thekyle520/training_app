@@ -27,7 +27,8 @@ const PostDetailBar = ({post}) => {
   const [slugs, setSlugs] = useState("")
   const [nextTraining, setNextTraining] = useState("")
   const [prevTraining, setPrevTraining] = useState("")
-  const [open, setOpen] = useState(false); 
+  const [open, setOpen] = useState(false);
+
 
   //Init
   useEffect(() => {
@@ -39,6 +40,8 @@ const PostDetailBar = ({post}) => {
     setNextTraining(handleNextTraining(slugs, post.slug))
     setPrevTraining(handlePrevTraining(slugs, post.slug))
   })
+
+  
 
   const handleNextTraining = (slugs, postSlug) => {
       let index = slugs.indexOf(postSlug)

@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link';
 import Button from '@mui/material/Button';
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import AccountMenu from './AccountMenu'
 
 

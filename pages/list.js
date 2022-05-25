@@ -7,14 +7,14 @@ import { Box } from '@mui/system';
 import { styled } from '@mui/material/styles';
 
 
-const list = ({data, session}) => {
+const list = ({data}) => {
     const posts = (data[0].nextUsers[0].posts)
     const complete = (data[0].nextUsers[0].completed.map((item, i) => item.slug))
     const progress = complete.length/posts.length * 100
     
-    useEffect(() => {
+    useEffect((data) => {
         sessionStorage.setItem('posts', JSON.stringify(data[0].nextUsers[0]));
-        console.log(session)
+        
     }, [])
      
     const BorderLinearProgress = styled(LinearProgress)

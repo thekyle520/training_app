@@ -13,11 +13,7 @@ const Profile = ({data}) => {
     const posts = data[0].nextUsers[0].posts
     const complete = data[0].nextUsers[0].completed
     const progress = complete.length/posts.length * 100
-    if (progress === 100) {
-        let status = true
-    } else {
-        let status = false
-    }
+    
 
 
 
