@@ -12,6 +12,7 @@ import Logout from '@mui/icons-material/Logout';
 import { signOut } from "next-auth/react";
 import Link from 'next/link'
 
+
 const ProfileLink = React.forwardRef(({ onClick, href }, ref) => {
   return (
     <a href={href} onClick={onClick} ref={ref}>
@@ -21,6 +22,8 @@ const ProfileLink = React.forwardRef(({ onClick, href }, ref) => {
     </a>
   )
 })
+
+ProfileLink.displayName = "ProfileLink"
 
 export default function AccountMenu() {
  

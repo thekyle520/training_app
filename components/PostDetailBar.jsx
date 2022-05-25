@@ -42,7 +42,6 @@ const PostDetailBar = ({post}) => {
   })
 
   
-
   const handleNextTraining = (slugs, postSlug) => {
       let index = slugs.indexOf(postSlug)
       index++
