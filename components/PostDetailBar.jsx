@@ -20,8 +20,8 @@ import {updateUserCompletion} from '../services';
 const PostDetailBar = ({post}) => {
 
   const { data: session, status } = useSession();
-  const loading = status === "loading";
-  if (loading) return null;
+  //const loading = status === "loading";
+  //if (loading) return null;
 
   const [complete, setComplete] = useState([])
   const [slugs, setSlugs] = useState("")
