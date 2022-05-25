@@ -11,11 +11,8 @@ const list = ({data}) => {
     const posts = (data[0].nextUsers[0].posts)
     const complete = (data[0].nextUsers[0].completed.map((item, i) => item.slug))
     const progress = complete.length/posts.length * 100
+    sessionStorage.setItem('posts', JSON.stringify(data[0].nextUsers[0]));
     
-    useEffect((data) => {
-        sessionStorage.setItem('posts', JSON.stringify(data[0].nextUsers[0]));
-        
-    }, [])
      
     const BorderLinearProgress = styled(LinearProgress)
     (({theme}) => ({
