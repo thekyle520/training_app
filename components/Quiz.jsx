@@ -33,8 +33,9 @@ const Quiz = ({questions, handleComplete}) => {
 	return (
 		<div className='bg-white w-450px min-h-200 h-min rounded-md p-20 shadow-md flex flex-col'>
 				{showScore ? (
-					<div className='flex text-lg items-center'>
-						You scored {score} out of {questions.length}
+					<div className='flex flex-row text-lg items-center'>
+						<div>You scored {score} out of {questions.length}</div>
+						<div>
 						{score === questions.length ? 
 							<Button color="success" onClick={handleComplete} loading={open} variant="contained"> 
 								Complete
@@ -42,6 +43,7 @@ const Quiz = ({questions, handleComplete}) => {
 							<Button color="error" onClick={handleResetQuiz} loading={open} variant="contained"> 
 								Retry
 							</Button>}
+						</div>
 					</div>
 				) : (
 					<>
