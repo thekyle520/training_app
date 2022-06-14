@@ -1,6 +1,5 @@
 import React from 'react'
 import Link from 'next/link';
-import Button from '@mui/material/Button';
 import { useSession, signIn } from "next-auth/react";
 import AccountMenu from './AccountMenu'
 
@@ -23,18 +22,7 @@ if (loading) return null;
                 </Link>
             </div>
             <div className='float-right block invisible md:visible'>
-                {session ? 
-                    (<div>
-                    <AccountMenu />
-                   
-                    </div>
-                    ) : 
-                    (<Button onClick={signIn} variant="contained"> 
-                        Sign In
-                    </Button>
-                    )}
-                
-                
+                {session && <AccountMenu />} 
             </div>
         
         </div>

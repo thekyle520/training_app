@@ -1,31 +1,48 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSession } from "next-auth/react"
 
 import { PostDetail, PostDetailBar, Loader } from '../../components';
+import Continuation from '../../components/Continuation';
 import { getPosts, getPostDetails } from '../../services';
 
 const PostDetails = ({ post }) => {
 
   const { data: session, status } = useSession();
-  const loading = status === "loading";
-  if (loading) return null;
 
-  
-
-
+ 
   // // if (router.isFallback) {
   // //   return <Loader />;
   // // }
 
+  const [complete, setComplete] = useState(false)
   
+
+  //Init
+  useEffect(() => {
+    let data = JSON.parse(sessionStorage.getItem('posts'))
+    let completed = data.completed.map((item, i) => item.slug)
+    if(completed.includes(post.slug)) {
+      setComplete(true)
+    } else {
+      setComplete(false)
+    }
+  })
+
+  const handleSetComplete = () => {
+    setComplete(true)
+  }
+
+
   
   return (
     <>
       <div className="container mx-auto px-10 mb-8">
-          <PostDetailBar post={post}/>
+        
         <div>
           <PostDetail post={post} />
         </div>
+        {!complete && <Continuation questions={post.quiz} post={post} handleSetComplete={handleSetComplete}/> }
+          <PostDetailBar post={post}/>
       </div>
       
     </>

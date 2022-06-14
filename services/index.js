@@ -30,6 +30,7 @@ export const getPosts = async () => {
         post(where: {slug: $slug}) {
           title
           slug
+          quiz
           content {
             raw
           }

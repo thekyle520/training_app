@@ -38,7 +38,7 @@ const Profile = ({data}) => {
     <div className="container mx-auto px-10 mb-8">
          <div className='flex flex-col rounded-lg bg-white	border-2 border-solid border-slate-200 '>
                 <div className='flex justify-center items-center rounded-lg border-2 border-solid border-gray-400 m-5'>
-                    <h1 className='p-4'>{`${progress}%`}</h1>
+                    <h1 className='p-4'>{`${Math.round(progress)}%`}</h1>
                     <Box sx={{ width: '80%' }}>
                         <BorderLinearProgress variant="determinate" value={progress} />
                     </Box>

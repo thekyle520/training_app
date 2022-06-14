@@ -1,7 +1,7 @@
 import Head from 'next/head'
-import { useSession } from 'next-auth/react';
-import Link from 'next/link';
-import Button from '@mui/material/Button';
+import { useSession } from "next-auth/react";
+import CourseSelect from '../components/CourseSelect';
+import LoginBox from '../components/LoginBox';
 
 export default function Home({ posts }) {
 
@@ -25,18 +25,8 @@ export default function Home({ posts }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {session ? 
-      (
-        <div>
-        <Button variant="contained" > 
-          <Link href='/list'>
-            <span className='cursor-pointer text-white'>
-                Head to Training
-            </span>
-          </Link>   
-        </Button>
-        </div>
-      ) : 
-      (<h1>Please log in</h1>)}
+      (<CourseSelect />) : 
+      (<LoginBox />)}
     </div>
    
 
