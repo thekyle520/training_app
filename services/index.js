@@ -99,4 +99,31 @@ export const getPosts = async () => {
     return result
   }
 
+  export const getAdminStatus = async (email) => {
+    const query = gql`
+    query GetAdminStatus ($email: String!) {
+      nextUser(where: {email: $email}, stage: DRAFT) {
+        admin
+      }
+    }`
+      
+      const result = await request(graphqlAPI, query, { email });
+  
+    return result
+  }
+  
+  export const getAllUsers = async () => {
+    const query = gql`
+    query GetAllUsers {
+      nextUsers(stage: DRAFT) {
+        email
+        id
+      }
+    }
+    `
+      
+      const result = await request(graphqlAPI, query);
+  
+    return result
+  }
   
